@@ -37,9 +37,11 @@
             const currentDay = now.getDay(); // Текущий день (0 - воскресенье, 1 - понедельник и т.д.)
 
             // Проверяем, является ли сегодня рабочим днем (вторник - пятница)
-            let message = "Я свободен)"; // Предполагаем, что мы свободны
+            let message;
 
-            if (currentDay >= 2 && currentDay <= 5) {
+            if (currentDay >= 2 && currentDay <= 5) { // Вторник - пятница
+                message = "Я свободен)"; // Предполагаем, что мы свободны
+
                 // Проверка времени уроков
                 for (let i = 0; i < lessons.length; i++) {
                     const lesson = lessons[i];
@@ -60,7 +62,9 @@
                     const minutesUntilEnd = Math.floor((endTime - now) / (1000 * 60)); // минуты до конца тренировки
                     message = `У меня тренировка, закончится через ${minutesUntilEnd} минут!) Я скучаю(`;
                 }
-            } else {
+            } else if (currentDay === 1) { // Понедельник
+                message = "Сегодня понедельник, но уроков нет.";
+            } else { // Выходные дни
                 message = "Сегодня выходной!";
             }
 

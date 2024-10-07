@@ -3,55 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Романтическое сообщение</title>
+    <title>Расписание уроков и тренировок</title>
     <style>
-        body, html {
-            margin: 0;
-            height: 100%;
-            overflow: hidden;
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(145deg, #fbd3e9, #bb377d);
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-            font-family: 'Arial', sans-serif;
-            user-select: none;
-        }
-        .message {
-            font-size: 2rem;
-            color: #fff;
+            height: 100vh;
             text-align: center;
-            opacity: 0;
-            animation: fadeIn 3s ease-in-out forwards;
-        }
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.8);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1);
-            }
         }
     </style>
 </head>
 <body>
-    <div class="message">
-        Сейчас провожаю брата на тренировку, хотел погулять, но ты спишь наверна, спи сладка)🌸💕
-    </div>
+    <div id="message"></div>
+
     <script>
-        // Отключаем возможность скролла и масштабирования
-        window.addEventListener('wheel', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-        window.addEventListener('touchmove', function(e) {
-            e.preventDefault();
-        }, { passive: false });
-        document.addEventListener('keydown', function(e) {
-            if (e.ctrlKey && (e.key === '=' || e.key === '-' || e.key === '0')) {
-                e.preventDefault();
+        const lessons = [
+            { start: '08:30', end: '09:10' },
+            { start: '09:30', end: '10:10' },
+            { start: '10:30', end: '11:10' },
+            { start: '11:30', end: '12:10' },
+            { start: '12:30', end: '13:10' },
+            { start: '13:25', end: '14:05' },
+            { start: '14:15', end: '14:55' }
+        ];
+
+        function displayMessage() {
+            const now = new Date();
+            const currentTime = now.toTimeString().slice(0, 5); // Текущее время в формате HH:MM
+            const currentDay = now.getDay(); // Текущий день (0 - воскресенье, 1 - понедельник и т.д.)
+
+            // Проверяем, является ли сегодня рабочим днем (вторник - пятница)
+            let message = "Я свободен)"; // Предполагаем, что мы свободны
+
+            if (currentDay >= 2 && currentDay <= 5) {
+                // Проверка времени уроков
+                for (let i = 0; i < lessons.length; i++) {
+                    const lesson = lessons[i];
+                    if (currentTime >= lesson.start && currentTime < lesson.end) {
+                        const minutes = now.getMinutes() - parseInt(lesson.start.split(':')[1]);
+                        message = `Идёт уже ${minutes} минута ${i + 1} урока, скучаю по тебе) Люблю тебя если смотришь это!`;
+                        break;
+                    }
+                }
+
+                // Проверка времени тренировки
+                const trainingStart = '18:20';
+                const trainingEnd = '19:50';
+                if (currentTime >= trainingStart && currentTime < trainingEnd) {
+                    const endTime = new Date(now);
+                    endTime.setHours(19);
+                    endTime.setMinutes(50);
+                    const minutesUntilEnd = Math.floor((endTime - now) / (1000 * 60)); // минуты до конца тренировки
+                    message = `У меня тренировка, закончится через ${minutesUntilEnd} минут!) Я скучаю(`;
+                }
+            } else {
+                message = "Сегодня выходной!";
             }
-        });
+
+            document.getElementById('message').innerText = message;
+        }
+
+        displayMessage();
+        // Обновляем сообщение каждые 60 секунд
+        setInterval(displayMessage, 60000);
     </script>
 </body>
 </html>

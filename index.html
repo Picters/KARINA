@@ -3,66 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карина</title>
+    <title>Романтическое сообщение</title>
     <style>
-        * {
+        body, html {
             margin: 0;
-            padding: 0;
-            overflow: hidden;
-            user-select: none; /* Запрет выделения текста */
-        }
-        html, body {
             height: 100%;
-            background-color: #fbe7e7; /* Романтический фон */
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
             font-family: 'Arial', sans-serif;
-            touch-action: none; /* Запрет на зумирование */
+            user-select: none;
         }
-        .text {
+        .message {
+            font-size: 2rem;
+            color: #fff;
+            text-align: center;
             opacity: 0;
-            animation: fadeIn 3s forwards; /* Анимация появления текста */
-            margin: 10px 0; /* Отступ между строками */
-            font-size: 3rem; /* Размер текста */
-            color: #d63384; /* Нежный розовый цвет текста */
-            text-shadow: 0 0 15px rgba(214, 51, 132, 0.8); /* Свечение для атмосферы */
-            font-weight: bold;
+            animation: fadeIn 3s ease-in-out forwards;
         }
-        .heart {
-            font-size: 3.5rem; /* Размер эмодзи сердца */
-            animation-delay: 8.5s; /* Задержка для сердца */
-        }
-        .text:nth-child(1) { animation-delay: 0.5s; }
-        .text:nth-child(2) { animation-delay: 1.5s; }
-        .text:nth-child(3) { animation-delay: 2.5s; }
-        .text:nth-child(4) { animation-delay: 3.5s; }
-        .text:nth-child(5) { animation-delay: 4.5s; }
-        .text:nth-child(6) { animation-delay: 5.5s; }
-        .text:nth-child(7) { animation-delay: 6.5s; }
-        .text:nth-child(8) { animation-delay: 7.5s; }
         @keyframes fadeIn {
             0% {
                 opacity: 0;
-                transform: translateY(20px); /* Эффект подъема */
+                transform: scale(0.8);
             }
             100% {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
     </style>
 </head>
 <body>
-    <div class="text">Карина</div>
-    <div class="text">Ты лучшая</div>
-    <div class="text">Ты милая</div>
-    <div class="text">Ты красивая</div>
-    <div class="text">Сладких снов</div>
-    <div class="text">Доброй ночи</div>
-    <div class="text">Люблю тебя</div>
-    <div class="text">Очень сильно</div>
-    <div class="text heart">💕</div>
+    <div class="message">
+        Сейчас провожаю брата на тренировку, хотел погулять, но ты спишь наверна, спи сладка)🌸💕
+    </div>
+    <script>
+        // Отключаем возможность скролла и масштабирования
+        window.addEventListener('wheel', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        window.addEventListener('touchmove', function(e) {
+            e.preventDefault();
+        }, { passive: false });
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && (e.key === '=' || e.key === '-' || e.key === '0')) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
